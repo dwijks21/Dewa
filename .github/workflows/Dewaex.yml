@@ -1,0 +1,25 @@
+name: Unzip file and Commit
+
+on:
+  push:
+    paths:
+      - 'path/ceritacinta.id.zip'  # Ganti dengan lokasi file ZIP yang di-upload
+
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3  # Untuk checkout repositori
+
+      - name: Unzip the file
+        run: |
+          unzip path/ceritacinta.id.zip -d extracted_files/
+        
+      - name: Commit extracted files
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add extracted_files/
+          git commit -m "Extracted files from ZIP"
+          git push
